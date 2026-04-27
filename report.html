@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report Incident — National Cyber Defence Portal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="top-strip">Government of India &nbsp;|&nbsp; Ministry of Defence &nbsp;|&nbsp; Cyber Security Division</div>
+
+  <header>
+    <div class="header-inner">
+      <svg class="emblem" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="32" cy="32" r="30" stroke="#c8922a" stroke-width="2" fill="none"/>
+        <circle cx="32" cy="32" r="22" stroke="#c8922a" stroke-width="1" fill="none"/>
+        <circle cx="32" cy="32" r="5" fill="#c8922a"/>
+        <line x1="32" y1="10" x2="32" y2="27" stroke="#c8922a" stroke-width="1.2"/>
+        <line x1="32" y1="37" x2="32" y2="54" stroke="#c8922a" stroke-width="1.2"/>
+        <line x1="10" y1="32" x2="27" y2="32" stroke="#c8922a" stroke-width="1.2"/>
+        <line x1="37" y1="32" x2="54" y2="32" stroke="#c8922a" stroke-width="1.2"/>
+        <line x1="17.4" y1="17.4" x2="28.8" y2="28.8" stroke="#c8922a" stroke-width="1.2"/>
+        <line x1="35.2" y1="35.2" x2="46.6" y2="46.6" stroke="#c8922a" stroke-width="1.2"/>
+        <line x1="46.6" y1="17.4" x2="35.2" y2="28.8" stroke="#c8922a" stroke-width="1.2"/>
+        <line x1="28.8" y1="35.2" x2="17.4" y2="46.6" stroke="#c8922a" stroke-width="1.2"/>
+      </svg>
+      <div class="header-text">
+        <h1>National Cyber Defence Portal</h1>
+        <div class="subtitle">For Defence Personnel &amp; Their Families &nbsp;·&nbsp; Restricted Access</div>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html">Home</a>
+      <a href="auth.html">Login / Register</a>
+      <a href="report.html" class="active">Report Incident</a>
+      <a href="result.html">Check Status</a>
+      <a href="admin.html">Admin</a>
+    </div>
+  </nav>
+
+  <div class="notice-bar">RESTRICTED — Session active. Report will be submitted under your authenticated personnel ID.</div>
+
+  <div class="secure-strip">
+    <span>&#9679; SECURE</span>SSL/TLS Encrypted Connection &nbsp;|&nbsp; Session ID: NCDP/SES/2026/04/874231
+  </div>
+
+  <main>
+    <div class="page-title">
+      <div class="breadcrumb"><a href="index.html">Home</a> &rsaquo; <a href="auth.html">Login</a> &rsaquo; Report Incident</div>
+      <h2>Report a Cyber Incident</h2>
+      <p>Submit details of the suspicious content for immediate threat analysis</p>
+    </div>
+
+    <div style="max-width: 700px; margin: 0 auto;">
+
+      <div class="alert alert-info">
+        <strong>Confidential:</strong> All submissions are encrypted and accessible only to authorised DCERT analysts. Provide as much detail as possible to enable accurate threat assessment.
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2>Incident Details</h2>
+          <p>All fields marked * are mandatory</p>
+        </div>
+
+        <form id="reportForm" onsubmit="handleReport(event)" novalidate>
+
+          <!-- Incident Type -->
+          <div class="form-group">
+            <label for="incidentType">Type of Incident <span class="required">*</span></label>
+            <select id="incidentType" name="incidentType" onchange="switchInputType(this.value)" required>
+              <option value="" disabled selected>-- Select incident type --</option>
+              <option value="url">Suspicious URL / Link</option>
+              <option value="message">Suspicious Message / Text</option>
+              <option value="file">Suspicious File / Attachment</option>
+              <option value="call">Vishing / Fraudulent Call</option>
+              <option value="account">Account Compromise</option>
+              <option value="financial">Financial Fraud / UPI Scam</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <!-- Dynamic Input Zone -->
+          <div id="dynamicZone" style="display:none;">
+
+            <!-- URL INPUT -->
+            <div id="urlInput" style="display:none;">
+              <div class="form-group">
+                <label for="suspiciousUrl">Suspicious URL / Link <span class="required">*</span></label>
+                <input type="text" id="suspiciousUrl" name="suspiciousUrl" placeholder="Paste the full URL here (e.g. https://...)">
+                <div class="form-hint">Copy and paste the exact URL. Do not click on it.</div>
+              </div>
+              <div class="form-group">
+                <label for="urlSource">Where did you receive this URL?</label>
+                <select id="urlSource" name="urlSource">
+                  <option value="">-- Select source --</option>
+                  <option value="email">Email</option>
+                  <option value="whatsapp">WhatsApp</option>
+                  <option value="sms">SMS</option>
+                  <option value="social">Social Media</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- MESSAGE INPUT -->
+            <div id="messageInput" style="display:none;">
+              <div class="form-group">
+                <label for="suspiciousMessage">Suspicious Message Content <span class="required">*</span></label>
+                <textarea id="suspiciousMessage" name="suspiciousMessage" rows="5" placeholder="Paste or type the full suspicious message content here..."></textarea>
+                <div class="form-hint">Include the full message text. Do not edit or paraphrase.</div>
+              </div>
+              <div class="form-group">
+                <label for="senderInfo">Sender Information (if available)</label>
+                <input type="text" id="senderInfo" name="senderInfo" placeholder="Phone number, email address, username, etc.">
+              </div>
+            </div>
+
+            <!-- FILE INPUT -->
+            <div id="fileInput" style="display:none;">
+              <div class="form-group">
+                <label for="suspiciousFile">Upload Suspicious File <span class="required">*</span></label>
+                <div style="border: 2px dashed var(--border); border-radius: var(--radius); padding: 28px 20px; text-align: center; background: #f8fafc; cursor: pointer;" onclick="document.getElementById('fileUpload').click()">
+                  <div style="font-size:28px; margin-bottom:8px;">&#128193;</div>
+                  <div style="font-size:14px; color: var(--text-secondary); margin-bottom:4px;">Click to select file, or drag and drop</div>
+                  <div style="font-size:12px; color: var(--text-muted);" id="fileLabel">Accepted: .pdf, .doc, .docx, .jpg, .png, .zip, .apk (Max 10MB)</div>
+                  <input type="file" id="fileUpload" name="fileUpload" style="display:none;" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.zip,.apk" onchange="updateFileLabel(this)">
+                </div>
+              </div>
+              <div class="alert alert-high" style="font-size:13px; padding:10px 14px;">
+                <strong>Warning:</strong> Do not open or execute the suspicious file. Upload it as-is.
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Date/Time of Incident -->
+          <div class="form-group">
+            <label for="incidentDate">Date &amp; Time of Incident <span class="required">*</span></label>
+            <input type="text" id="incidentDate" name="incidentDate" placeholder="DD/MM/YYYY HH:MM" required>
+            <div class="form-hint">Approximate date and time when you received or noticed the suspicious content.</div>
+          </div>
+
+          <!-- Platform -->
+          <div class="form-group">
+            <label for="platform">Platform / Medium</label>
+            <select id="platform" name="platform">
+              <option value="">-- Select platform (optional) --</option>
+              <option value="email">Email</option>
+              <option value="whatsapp">WhatsApp</option>
+              <option value="sms">SMS</option>
+              <option value="telegram">Telegram</option>
+              <option value="facebook">Facebook</option>
+              <option value="instagram">Instagram</option>
+              <option value="website">Website</option>
+              <option value="phone-call">Phone Call</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <!-- Additional Description -->
+          <div class="form-group">
+            <label for="description">Additional Description <span class="required">*</span></label>
+            <textarea id="description" name="description" rows="4" placeholder="Describe what happened, any actions you may have already taken, and any other relevant details..." required></textarea>
+          </div>
+
+          <!-- Impact -->
+          <div class="form-group">
+            <label for="impact">Impact Assessment</label>
+            <select id="impact" name="impact">
+              <option value="">-- Select impact level (if known) --</option>
+              <option value="none">No impact yet (proactive report)</option>
+              <option value="data">Personal data may have been exposed</option>
+              <option value="financial">Financial loss incurred</option>
+              <option value="access">Unauthorised account access occurred</option>
+              <option value="device">Device may be compromised</option>
+              <option value="official">Official / classified information at risk</option>
+            </select>
+          </div>
+
+          <hr>
+
+          <!-- Declaration -->
+          <div class="form-group" style="display:flex; gap:10px; align-items:flex-start;">
+            <input type="checkbox" id="declaration" name="declaration" style="width:auto; margin-top:3px;" required>
+            <label for="declaration" style="font-weight:400; font-size:13px; color: var(--text-secondary);">
+              I hereby declare that all information provided above is true and accurate to the best of my knowledge.
+              I understand that providing false information is a punishable offence under the IT Act, 2000.
+            </label>
+          </div>
+
+          <!-- Submit -->
+          <button type="submit" class="btn btn-primary btn-full btn-lg" style="margin-top:8px;">
+            Submit Incident Report
+          </button>
+
+          <p style="font-size:12px; color:#6b7e91; text-align:center; margin-top:14px;">
+            A unique Reference Number will be generated upon submission. Retain it for tracking.
+          </p>
+
+        </form>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <strong>National Cyber Defence Portal</strong> &nbsp;|&nbsp; Ministry of Defence, Government of India<br>
+    <span style="margin-top:4px; display:block;">For official use only. Unauthorized access is a criminal offence under the IT Act, 2000.</span>
+  </footer>
+
+  <script>
+    function switchInputType(type) {
+      const zone = document.getElementById('dynamicZone');
+      const urlEl = document.getElementById('urlInput');
+      const msgEl = document.getElementById('messageInput');
+      const fileEl = document.getElementById('fileInput');
+      zone.style.display = 'block';
+      urlEl.style.display = 'none';
+      msgEl.style.display = 'none';
+      fileEl.style.display = 'none';
+      if (type === 'url') urlEl.style.display = 'block';
+      else if (type === 'message') msgEl.style.display = 'block';
+      else if (type === 'file') fileEl.style.display = 'block';
+    }
+
+    function updateFileLabel(input) {
+      const label = document.getElementById('fileLabel');
+      if (input.files && input.files[0]) {
+        const f = input.files[0];
+        const sizeMB = (f.size / (1024 * 1024)).toFixed(2);
+        label.textContent = 'Selected: ' + f.name + ' (' + sizeMB + ' MB)';
+        label.style.color = '#166534';
+      }
+    }
+
+    function handleReport(e) {
+      e.preventDefault();
+      const decl = document.getElementById('declaration');
+      if (!decl.checked) {
+        alert('Please read and accept the declaration before submitting.');
+        return;
+      }
+      window.location.href = 'result.html';
+    }
+  </script>
+
+</body>
+</html>
